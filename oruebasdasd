@@ -1,0 +1,149 @@
+/**
+ *
+ *
+ * 
+ *
+ */
+
+int ComparerString(char *str1, char *str2)
+{
+        int xLen = strlen(str1);
+        int yLen = strlen(str2);
+        while(str1)
+        {
+                if()
+        }
+}
+
+
+
+-----------------------------------------------------------------------------
+/**
+ * Exec_Monty - Executes monty code
+ *
+ */
+
+#include "monty.h"
+
+char* montyCommands[3] = {"push", "pall"};
+/* */
+
+int TokenMonty(FILE *code_Monty)
+{
+        char *line_buf = NULL;
+        char *copy_line = NULL;
+        char *command = NULL;
+        size_t line_buf_size = 0;
+        int line_count = 0;
+        ssize_t line_size;
+
+
+
+
+        line_size = getline(&line_buf, &line_buf_size, code_Monty);
+        while (line_size >= 0)
+        {
+                /* Increment our line count */
+                line_count++;
+                copy_line = malloc(sizeof(char) * (strlen(line_buf) + 1));
+                strcpy(copy_line, line_buf);
+                /* Show the line details */
+
+                command = formater(copy_line);
+                
+
+                printf("%d %s %s %s aaa \n", line_count, line_buf, copy_line, command);
+
+                /* next line */
+                line_size = getline(&line_buf, &line_buf_size, code_Monty);
+
+                FreeStr_Monty(command);
+                FreeStr_Monty(copy_line);
+        }
+        FreeStr_Monty(line_buf);
+
+        return EXIT_SUCCESS;
+}
+
+
+/* */
+
+char *formater(char *commandStr)
+{
+        const char del[2] = " ";
+        int x = 0;
+        char aavalueMonty[2] = "";
+        char *tokenMonty = NULL, *valueMonty = NULL, *command = NULL;
+
+
+        printf("motimer cari;o  %s", commandStr);
+
+
+        tokenMonty = strtok(commandStr, del);
+        while (tokenMonty)
+        {
+                printf("comandomonty%s, %s", tokenMonty, montyCommands[x]);
+                while (montyCommands[x])
+                {
+                        if (ComparerString(montyCommands[x], tokenMonty) == 1)
+                        {
+                                command = malloc(sizeof(char) + (strlen(montyCommands[x]) + 2));
+                                strcpy(command, montyCommands[x]);
+                                if (x == 0)
+                                {
+                                        valueMonty = tokenMonty;
+                                        valueMonty = strtok(NULL,del);
+                                        aavalueMonty[0] = valueMonty[0];
+                                        printf("successss %s,, %s,,, %szzzz, \n", montyCommands[x], tokenMonty, valueMonty);
+                                        printf("%s l\n \n",aavalueMonty);
+                                        
+                                        strcat(command, aavalueMonty);
+                                        printf("succccccccccccccccccccccccc %s", command);
+                                        return(command);
+                                }
+                                printf("anotheroneee %s %s \n", tokenMonty, montyCommands[x]);
+
+                        }
+                        x++;
+                }
+                x = 0;
+                tokenMonty = strtok(NULL, del);
+        }
+        
+        
+        return(command);
+}
+
+
+/**
+ *
+ *
+ * 
+ *
+ */
+
+int ComparerString(char *str1, char *str2)
+{
+        int xLen = strlen(str1), yLen = strlen(str2);
+        int x = 0, counter = 0;
+        if (xLen == yLen)
+        {
+                while(str1[x])
+                {
+                        if(str1[x] == str2[x])
+                                counter++;
+                        else
+                                return (0);
+                        x++;
+                }
+        }
+        if (counter == xLen && counter == yLen)
+                return (1);
+        
+        return (0);
+}
+
+
+
+
+
