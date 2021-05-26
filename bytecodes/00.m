@@ -1,5 +1,6 @@
-push 50 
-push 45642155
+push 0
+push 1
+push 2 comentario xddd
+push 3
 push 4
-push 5451518 5aasasd
 pall

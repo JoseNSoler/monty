@@ -8,6 +8,8 @@
 #include <stdarg.h>
 
 
+
+/*  Version 1.0*/
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -36,15 +38,26 @@ typedef struct stack_s
 typedef struct instruction_s
 {
         char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+        void (*f)(stack_t ***stack, unsigned int line_number);
 } instruction_t;
 
 
 
 /* Functions */
 
-int TokenMonty(FILE *code_Monty);
-char *formater(char *commandStr, int line_number);
+
+void (*exec_func(char *s))(stack_t ***stack, unsigned int line_number);
+
+
+void push(stack_t ***stack, unsigned int line_number);
+void pall(stack_t ***stack, unsigned int line_number);
+
+
+void systemInit(stack_t *ts);
+
+
+int TokenMonty(FILE *code_Monty, stack_t *stack);
+char *formater(char *commandStr, int line_number, stack_t **header);
 
 int ComparerString(char *s1, char *s2);
 
@@ -62,6 +75,9 @@ void Err_NoInt(int line_number);
 
 
 /* Free */
+
+void FreeStackMonty(stack_t *h);
+
 void FreeStr_Monty(char *delStr);
 void FreeMontyaa(int argc, char *argv, ...);
 

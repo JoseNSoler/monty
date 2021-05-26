@@ -12,7 +12,9 @@ int main(int argc, char *argv[])
 {
         FILE *code_Monty = NULL;
         int status = 0;
+        stack_t stack;
 
+        systemInit(&stack);
         if(argc != 2)
                 return(Err_Usage());
 
@@ -21,9 +23,11 @@ int main(int argc, char *argv[])
         if(!code_Monty)
                 return(Err_File(argv[1]));
         
-        status = TokenMonty(code_Monty);
+        status = TokenMonty(code_Monty, &stack);
 
         printf("FINALL%d %d \n",EXIT_SUCCESS, status);
+
+        FreeStackMonty(&stack);
 
         fclose(code_Monty);
         return(status);
@@ -36,6 +40,13 @@ void FreeStr_Monty(char *delStr)
         free(delStr);
 }
 
+
+void systemInit(stack_t *ts)
+{
+    /* Set ts options to be ready */
+    ts->n = -1;
+    ts->prev = NULL;
+    ts->next = NULL;}
 
 /*
         fileName = malloc(sizeof(char) * (strlen(argv[1] + 1)));

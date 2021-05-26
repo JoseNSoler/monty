@@ -7,7 +7,7 @@
 
 /* */
 
-int TokenMonty(FILE *code_Monty)
+int TokenMonty(FILE *code_Monty, stack_t *stack)
 {
         char *line_buf = NULL;
         char *copy_line = NULL;
@@ -16,6 +16,7 @@ int TokenMonty(FILE *code_Monty)
         int line_count = 0;
         ssize_t line_size;
         int status = 0;
+
 
         line_size = getline(&line_buf, &line_buf_size, code_Monty);
         while (line_size >= 0)
@@ -33,10 +34,11 @@ int TokenMonty(FILE *code_Monty)
                 strcpy(copy_line, line_buf);
                 /* Show the line details */
 
-                command = formater(copy_line, line_count);
+
+                command = formater(copy_line, line_count, &stack);
 
 
-                printf("inside token line %d %s %s -%s- aaa %d \n", line_count, line_buf, copy_line, command, status);
+                printf("final commando %d %s %s -%s- aaa %d \n", line_count, line_buf, copy_line, command, status);
 
                 /* next line */
                 line_size = getline(&line_buf, &line_buf_size, code_Monty);
@@ -57,23 +59,27 @@ int TokenMonty(FILE *code_Monty)
         }
         FreeStr_Monty(line_buf);
 
+
         return EXIT_SUCCESS;
 }
 
 
 /* */
 
-char *formater(char *commandStr, int line_number)
+char *formater(char *commandStr, int line_number, stack_t **header)
 {
         const char del[2] = " ";
-        int x = 0, status = 0, lastChar = 0, lastNum = 0;
+        int x = 0, lastChar = 0, lastNum = 0, value = 0;
+        unsigned int Fvalue = 0;
         char* montyCommands[3] = {"push", "pall"};
         char *tokenMonty = NULL, *valueMonty = NULL, *command = NULL, *copyComm = NULL;
 
         copyComm = malloc(sizeof(char) * (strlen(commandStr) + 1));
-
-
-        printf("motimer cari;o  %s", commandStr);
+        if(!copyComm)
+        {
+                Err_Malloc();
+                return(NULL);
+        }
 
         strcpy(copyComm, commandStr);
         tokenMonty = strtok(commandStr, del);
@@ -123,30 +129,36 @@ char *formater(char *commandStr, int line_number)
                                         valueMonty = tokenMonty;
                                         valueMonty = strtok(NULL,del);
                                         lastNum = ((int)(strlen(valueMonty)));
-
+                                        /* Copy only text avoiding `jump line` */
                                         printf("another one %s \n", valueMonty);
                                         if (valueMonty[(int)(strlen(valueMonty) - 1)] == 10)
                                         {
                                                 printf("salto desde monty %d", valueMonty[((int)(strlen(valueMonty) - 1))]);
-                                                status = MakeNumber(valueMonty, (lastNum), line_number);
+                                                value = MakeNumber(valueMonty, (lastNum), line_number);
                                         }
                                         else
-                                                status = MakeNumber(valueMonty, lastNum, line_number);
+                                                value = MakeNumber(valueMonty, lastNum, line_number);
 
-                                        if(status < 0)
+                 
+                 
+                                        Fvalue = ((int)value);
+                                        printf("-------------------///%d", Fvalue);
+                                        if(value < 0)
                                         {
                                                 FreeStr_Monty(command);
                                                 return(NULL);
                                         }
-                                        return(command);
                                 }
                                 /* command -pall- */
-                                if (montyCommands[x] == montyCommands[1])
+                                
+                                if ((montyCommands[x] == montyCommands[1]) && (ComparerString(command, montyCommands[1]) == 0))
+                                {
                                         printf("pallasaaa");
+                                }
+                                exec_func(montyCommands[x])(&header, Fvalue);
 
-                                printf("anotheroneee %s %s %d \n", tokenMonty, montyCommands[x], status);
+                                printf("anotheroneee %s %s %d \n", tokenMonty, montyCommands[x], value);
                                 return(command);
-
                         }
                         x++;
                 }

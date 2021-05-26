@@ -46,14 +46,14 @@ int MakeNumber(char *num, int delim, int line_number)
         char *number = NULL;
         int x = 0, value = 0, status = 0;
 
-        printf("dentro de comando num %s %d \n", num, delim);
+        /*printf("dentro de comando num %s %d \n", num, delim);*/
 
 
         if (num[delim - 1] == 10)
         {
                 status = 1;
                 number = malloc(sizeof(char) * (delim + 1));
-                printf("saaaaaaaaaaaaaaaaaalto");
+                /*printf("saaaaaaaaaaaaaaaaaalto");*/
         }
         else
         {
@@ -95,7 +95,7 @@ int MakeNumber(char *num, int delim, int line_number)
                 number[delim] = '\0';
         }
 
-        printf("ultima linea char %d", number[delim - 1]);
+        /*printf("ultima linea char %d", number[delim - 1]);*/
         value = atoi(number);
 
         printf("final makenumber %s **%s** /%d/", num, number, value);
@@ -131,7 +131,7 @@ int ComparerString(char *s1, char *s2)
 		}
 	}
 	z = s1[y] - s2[y];
-        printf("iniside -%d- , -%d-, -%d- /%s/", z, x, y, s1);
+        /*printf("iniside -%d- , -%d-, -%d- /%s/", z, x, y, s1);*/
 	return (z);
 }
 

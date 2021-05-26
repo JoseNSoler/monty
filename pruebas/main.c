@@ -21,22 +21,18 @@ typedef struct stack_s
 
 
 
-stack_t *pushMonty(stack_t **stack, unsigned int line_number);
-size_t print_dlistint(stack_t **h);
+void pushMonty(stack_t **stack, unsigned int line_number);
+void print_dlistint(stack_t **h);
 void FreeStackMonty(stack_t *h);
-
-
 
 
 
 int main(void)
 {
         stack_t *stack;
-        size_t n;
-        stack_t hello = {5, NULL, NULL};
+        size_t n = 0;
 
 
-        stack = &hello;
         stack = NULL;
         pushMonty(&stack, 0);
         pushMonty(&stack, 1);
@@ -45,7 +41,7 @@ int main(void)
         pushMonty(&stack, 4);
         pushMonty(&stack, 5);
 
-        n = print_dlistint(&stack);
+        print_dlistint(&stack);
         printf("number --> -%lu-\n", n);
 
         FreeStackMonty(stack);
@@ -54,14 +50,14 @@ int main(void)
 }
 
 
-stack_t *pushMonty(stack_t **stack, unsigned int line_number)
+void pushMonty(stack_t **stack, unsigned int line_number)
 {
         stack_t *node = NULL;
         stack_t *tmp = *stack;
 
         node = malloc(sizeof(stack_t));
         if (node == NULL)
-                return (NULL);
+                exit(EXIT_FAILURE);
         if (tmp == NULL)
         {
                 node->next = NULL;
@@ -80,7 +76,6 @@ stack_t *pushMonty(stack_t **stack, unsigned int line_number)
                 tmp = node;
                 *stack = node;
         }
-        return(node);
 }
 
 
@@ -92,7 +87,7 @@ stack_t *pushMonty(stack_t **stack, unsigned int line_number)
  * for Holberton project
  */
 
-size_t print_dlistint(stack_t **h)
+void print_dlistint(stack_t **h)
 {
 	size_t x = 0;
         stack_t *tmp = *h;
@@ -104,7 +99,6 @@ size_t print_dlistint(stack_t **h)
 		tmp = tmp->next;
 	}
 
-	return (x);
 }
 
 
